@@ -12,7 +12,7 @@ RSpec.describe CustomerProfile do
       end
     end
 
-    it "can generate a proper URI for not_real.com" do
+    it "can generate a proper query string for not_real.com" do
       expect(@library.get_request_uri.query).to eq("income=50000&zipcode=6201&age=35")
     end
 
