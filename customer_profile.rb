@@ -1,7 +1,6 @@
 require 'net/http'
 require 'json'
 require_relative 'http_request'
-require 'pry'
 
 class CustomerProfile
   attr_reader :age, :income, :zipcode, :propensity, :ranking
