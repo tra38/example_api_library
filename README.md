@@ -34,3 +34,6 @@ profile.ranking
 =>"C"
 ```
 
+When you create a new CustomerProfile object, we perform an API call to not_real.com. If the API call fails (Internal Service Error) or the API is unable to determine profile information (4XX Client Error), an error will be raised informing you of the situation.
+
+```http_request.rb```, a file that ```customer_profile.rb``` is using to help query the API, may warn you if the API has moved to a different location (or raise a seperate error in case too many redirections occur).
