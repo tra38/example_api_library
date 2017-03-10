@@ -31,7 +31,7 @@ RSpec.describe CustomerProfile do
         html = "<html><body><h3>Internal Service Error</h3><br />The website is currently down. Please try again later.</body></html>"
         uri = URI("https://not_real.com/customer_scoring?income=50000&zipcode=6201&age=35")
         allow(HttpRequest).to receive(:get_request).with(uri) { { code: 500, response: html } }
-        expect { @library = CustomerProfile.new(age: 35, income: 50_000, zipcode: 6201) }.to  raise_error(RuntimeError, /The API server is currently down. HTTP Response Code: 500./)
+        expect { @library = CustomerProfile.new(age: 35, income: 50_000, zipcode: 6201) }.to  raise_error(RuntimeError, /Either an unknown error has occured, or the API server is currently down. HTTP Response Code: 500./)
       end
     end
   end

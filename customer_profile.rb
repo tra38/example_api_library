@@ -24,17 +24,24 @@ class CustomerProfile
 
   def acquire_json
     http_request = HttpRequest.get_request(get_request_uri)
-    http_request_code = http_request[:code]
-    if http_request_code >= 200 && http_request_code < 400
+    code = http_request[:code]
+    if request_successful?(code)
       JSON.parse(http_request[:response])
-    elsif http_request_code >= 400 && http_request_code < 500
+    elsif client_error?(code)
       message = JSON.parse(http_request[:response])["message"]
-      raise "The server rejects the request. HTTP Response Code: #{http_request_code}. Message: #{message}"
-    elsif http_request_code >= 500
-      raise "The API server is currently down. HTTP Response Code: #{http_request_code}."
+      raise "The server rejects the request. HTTP Response Code: #{code}. Message: #{message}"
     else
-      raise "An unknown error has occurred. HTTP Response Code: #{http_request}"
+      raise "The API server is currently down, or an unknown error has occured. HTTP Response Code: #{code}."
     end
+  end
+
+  private
+  def request_successful?(code)
+    code.between?(200, 399)
+  end
+
+  def client_error?(code)
+    code.between?(400,499)
   end
 
 end
