@@ -31,7 +31,7 @@ class CustomerProfile
       message = JSON.parse(http_request[:response])["message"]
       raise "The server rejects the request. HTTP Response Code: #{code}. Message: #{message}"
     else
-      raise "The API server is currently down, or an unknown error has occured. HTTP Response Code: #{code}."
+      raise "The API server is currently down. HTTP Response Code: #{code}."
     end
   end
 
