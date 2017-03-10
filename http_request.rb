@@ -13,7 +13,7 @@ module HttpRequest
     response_code = response.code
 
     case
-    when response_code.between?(300, 400)
+    when response_code.between?(300, 399)
       new_location_url = response["location"]
       warn "redirected to #{new_location_url}"
       new_location_uri = URI(new_location_url)
