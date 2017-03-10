@@ -116,7 +116,6 @@ RSpec.describe HttpRequest do
       RSpec::Mocks.with_temporary_scope do
 
         @original_html = %{<html><body>You are being redirected.</body></html>}
-        @original_json = %{{"propensity": 0.26532, "ranking": "C"}}
 
         old_url = "https://not_real.com/v1_hm_maybe_v2_sounds_pretty_cool/customer_scoring?income=50000&zipcode=6201&age=35"
         new_url = "https://not_real.com/v2_hm_maybe_i_like_v1_better/customer_scoring?income=50000&zipcode=6201&age=35"
@@ -126,7 +125,7 @@ RSpec.describe HttpRequest do
         first_mock_http_request = instance_double(Net::HTTPRedirection, :body => @original_html, code: 301)
         allow(first_mock_http_request).to receive(:[]).with("location").and_return(new_url)
 
-        second_mock_http_request = instance_double(Net::HTTPRedirection, :body => @original_json, code: 301)
+        second_mock_http_request = instance_double(Net::HTTPRedirection, :body => @original_html, code: 301)
         allow(second_mock_http_request).to receive(:[]).with("location").and_return(old_url)
 
         allow(HttpRequest).to receive(:send_http_request).with(old_uri) { first_mock_http_request }
@@ -135,7 +134,6 @@ RSpec.describe HttpRequest do
         expect { @http_request = HttpRequest.get_request(old_uri) }.to raise_error(RuntimeError)
       end
     end
-
   end
 
 end
