@@ -25,16 +25,16 @@ RSpec.describe CustomerProfile do
     end
   end
 
-  context "Internal Service Error" do
-
+  context "5XX Client Error (Internal Service Error)" do
     it "raises a RuntimeError" do
       RSpec::Mocks.with_temporary_scope do
         html = "<html><body><h3>Internal Service Error</h3><br />The website is currently down. Please try again later.</body></html>"
         uri = URI("https://not_real.com/customer_scoring?income=50000&zipcode=6201&age=35")
         allow(HttpRequest).to receive(:get_request).with(uri) { { code: 500, response: html } }
-        expect { @library = CustomerProfile.new(age: 35, income: 50_000, zipcode: 6201) }.to  raise_error(RuntimeError)
+        expect { @library = CustomerProfile.new(age: 35, income: 50_000, zipcode: 6201) }.to  raise_error(RuntimeError, /The API server is currently down. HTTP Response Code: 500./)
       end
     end
+  end
 
   end
 
