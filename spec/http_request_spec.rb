@@ -27,7 +27,31 @@ RSpec.describe HttpRequest do
     end
   end
 
+  context "4XX Client Error" do
+
+    before(:all) do
+      RSpec::Mocks.with_temporary_scope do
+        @original_json = %{{"message": "We do not have any information on this type of person."}}
+        mock_http_request = instance_double(Net::HTTPClientError, :body => @original_json, code: 400)
+        uri = URI("https://not_real.com/customer_scoring?income=50000&zipcode=6201&age=35")
+        allow(HttpRequest).to receive(:send_http_request).with(uri).and_return(mock_http_request)
+        @http_request = HttpRequest.get_request(uri)
+      end
+    end
+
+    it "correctly receives an JSON object indicating failure if endpoint is working" do
+      returned_json = @http_request[:response]
+      expect(returned_json).to eq(@original_json)
+    end
+
+    it "returns correct HTTP code" do
+      code = @http_request[:code]
+      expect(code).to eq(400)
+    end
+  end
+
   context "Internal Service Error" do
+
     before(:all) do
       RSpec::Mocks.with_temporary_scope do
         @original_html = "<html><body><h3>Internal Service Error</h3><br />The website is currently down. Please try again later.</body></html>"
