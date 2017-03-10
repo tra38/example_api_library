@@ -7,7 +7,7 @@ RSpec.describe CustomerProfile do
       RSpec::Mocks.with_temporary_scope do
         json_object = %{{"propensity": 0.26532, "ranking": "C"}}
         uri = URI("https://not_real.com/customer_scoring?income=50000&zipcode=6201&age=35")
-        allow(HttpRequest).to receive(:get_request).with(uri) { json_object }
+        allow(HttpRequest).to receive(:get_request).with(uri) { { code: 200, response: json_object } }
         @library = CustomerProfile.new(age: 35, income: 50_000, zipcode: 6201)
       end
     end
@@ -25,7 +25,34 @@ RSpec.describe CustomerProfile do
     end
   end
 
+  context "Internal Service Error" do
+
+    it "raises a RuntimeError" do
+      RSpec::Mocks.with_temporary_scope do
+        html = "<html><body><h3>Internal Service Error</h3><br />The website is currently down. Please try again later.</body></html>"
+        uri = URI("https://not_real.com/customer_scoring?income=50000&zipcode=6201&age=35")
+        allow(HttpRequest).to receive(:get_request).with(uri) { { code: 500, response: html } }
+        expect { @library = CustomerProfile.new(age: 35, income: 50_000, zipcode: 6201) }.to  raise_error(RuntimeError)
+      end
+    end
+
+  end
+
 end
+
+
+        # @library = CustomerProfile.new(age: 35, income: 50_000, zipcode: 6201)
+
+      # end
+    # end
+
+    # it "inform users that the Internal Service Error occurred" do
+    #   expect { @library = CustomerProfile.new(age: 35, income: 50_000, zipcode: 6201) }.to  raise_error(RuntimeError)
+    # end
+
+  # end
+
+# end
 
 # Hm.
 
