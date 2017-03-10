@@ -45,7 +45,7 @@ When you create a new CustomerProfile object, we perform an API call to not_real
 ###Automated Tests
 To run the test suite, simply type ```rspec``` in the terminal.
 
-```ruby
+```bash
 >rspec
 
 ..............
