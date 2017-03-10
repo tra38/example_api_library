@@ -36,6 +36,16 @@ RSpec.describe CustomerProfile do
     end
   end
 
+  context "4XX Client Error" do
+    it "raises a RuntimeError" do
+      RSpec::Mocks.with_temporary_scope do
+        @original_json = %{{"message": "We do not have any information on this type of person."}}
+        mock_http_request = instance_double(Net::HTTPClientError, :body => @original_json, code: 400)
+        uri = URI("https://not_real.com/customer_scoring?income=50000&zipcode=6201&age=35")
+        allow(HttpRequest).to receive(:send_http_request).with(uri).and_return(mock_http_request)
+        expect { @library = CustomerProfile.new(age: 35, income: 50_000, zipcode: 6201) }.to  raise_error(RuntimeError, /Message: We do not have any information on this type of person./)
+      end
+    end
   end
 
 end

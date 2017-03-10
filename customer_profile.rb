@@ -27,6 +27,9 @@ class CustomerProfile
     http_request_code = http_request[:code].to_i
     if http_request_code >= 200 && http_request_code < 400
       JSON.parse(http_request[:response])
+    elsif http_request_code >= 400 && http_request_code < 500
+      message = JSON.parse(http_request[:response])["message"]
+      raise "The server rejects the request. HTTP Response Code: #{http_request_code}. Message: #{message}"
     elsif http_request_code >= 500
       raise "The API server is currently down. HTTP Response Code: #{http_request_code}."
     else
