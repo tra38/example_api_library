@@ -24,7 +24,7 @@ class CustomerProfile
 
   def acquire_json
     http_request = HttpRequest.get_request(get_request_uri)
-    http_request_code = http_request[:code].to_i
+    http_request_code = http_request[:code]
     if http_request_code >= 200 && http_request_code < 400
       JSON.parse(http_request[:response])
     elsif http_request_code >= 400 && http_request_code < 500
