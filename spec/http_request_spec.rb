@@ -7,7 +7,7 @@ RSpec.describe HttpRequest do
     before(:all) do
       RSpec::Mocks.with_temporary_scope do
         @original_json = %{{"propensity": 0.26532, "ranking": "C"}}
-        mock_http_request = instance_double(Net::HTTPSuccess, :body => @original_json, code: 200)
+        mock_http_request = instance_double(Net::HTTPSuccess, :body => @original_json, code: "200")
         uri = URI("https://not_real.com/customer_scoring?income=50000&zipcode=6201&age=35")
         allow(HttpRequest).to receive(:send_http_request).with(uri).and_return(mock_http_request)
         uri = URI("https://not_real.com/customer_scoring?income=50000&zipcode=6201&age=35")
@@ -32,7 +32,7 @@ RSpec.describe HttpRequest do
     before(:all) do
       RSpec::Mocks.with_temporary_scope do
         @original_json = %{{"message": "We do not have any information on this type of person."}}
-        mock_http_request = instance_double(Net::HTTPClientError, :body => @original_json, code: 400)
+        mock_http_request = instance_double(Net::HTTPClientError, :body => @original_json, code: "400")
         uri = URI("https://not_real.com/customer_scoring?income=50000&zipcode=6201&age=35")
         allow(HttpRequest).to receive(:send_http_request).with(uri).and_return(mock_http_request)
         @http_request = HttpRequest.get_request(uri)
@@ -55,7 +55,7 @@ RSpec.describe HttpRequest do
     before(:all) do
       RSpec::Mocks.with_temporary_scope do
         @original_html = "<html><body><h3>Internal Service Error</h3><br />The website is currently down. Please try again later.</body></html>"
-        mock_http_request = instance_double(Net::HTTPServerError, :body => @original_html, code: 500)
+        mock_http_request = instance_double(Net::HTTPServerError, :body => @original_html, code: "500")
         uri = URI("https://not_real.com/customer_scoring?income=50000&zipcode=6201&age=35")
         allow(HttpRequest).to receive(:send_http_request).with(uri).and_return(mock_http_request)
         uri = URI("https://not_real.com/customer_scoring?income=50000&zipcode=6201&age=35")
@@ -87,7 +87,7 @@ RSpec.describe HttpRequest do
         old_uri = URI(old_url)
         new_uri = URI(new_url)
 
-        first_mock_http_request = instance_double(Net::HTTPRedirection, :body => @original_html, code: 301)
+        first_mock_http_request = instance_double(Net::HTTPRedirection, :body => @original_html, code: "301")
         allow(first_mock_http_request).to receive(:[]).with("location").and_return(new_url)
 
         second_mock_http_request = instance_double(Net::HTTPSuccess, :body => @original_json, code: 200)
@@ -122,10 +122,10 @@ RSpec.describe HttpRequest do
         old_uri = URI(old_url)
         new_uri = URI(new_url)
 
-        first_mock_http_request = instance_double(Net::HTTPRedirection, :body => @original_html, code: 301)
+        first_mock_http_request = instance_double(Net::HTTPRedirection, :body => @original_html, code: "301")
         allow(first_mock_http_request).to receive(:[]).with("location").and_return(new_url)
 
-        second_mock_http_request = instance_double(Net::HTTPRedirection, :body => @original_html, code: 301)
+        second_mock_http_request = instance_double(Net::HTTPRedirection, :body => @original_html, code: "301")
         allow(second_mock_http_request).to receive(:[]).with("location").and_return(old_url)
 
         allow(HttpRequest).to receive(:send_http_request).with(old_uri) { first_mock_http_request }

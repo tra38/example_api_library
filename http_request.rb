@@ -12,7 +12,7 @@ module HttpRequest
 
       response = send_http_request(uri)
 
-      response_code = response.code
+      response_code = response.code.to_i
 
       case
       when is_redirect?(response_code)
@@ -22,7 +22,7 @@ module HttpRequest
         get_request(new_location_uri, limit - 1)
       else
         {
-          code: response.code,
+          code: response_code,
           response: response.body
         }
       end
