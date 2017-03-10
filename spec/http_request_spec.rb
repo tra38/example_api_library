@@ -16,7 +16,7 @@ RSpec.describe HttpRequest do
       end
     end
 
-    it "correctly receives and parses a JSON object if endpoint is working" do
+    it "correctly receives an JSON object indicating success if endpoint is working" do
       returned_json = @http_request[:response]
       expect(returned_json).to eq(@original_json)
     end
