@@ -131,7 +131,7 @@ RSpec.describe HttpRequest do
         allow(HttpRequest).to receive(:send_http_request).with(old_uri) { first_mock_http_request }
         allow(HttpRequest).to receive(:send_http_request).with(new_uri) { second_mock_http_request }
 
-        expect { @http_request = HttpRequest.get_request(old_uri) }.to raise_error(RuntimeError)
+        expect { @http_request = HttpRequest.get_request(old_uri) }.to raise_error(RuntimeError, /Redirect limit exceeded/)
       end
     end
   end
