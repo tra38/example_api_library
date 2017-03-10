@@ -49,28 +49,3 @@ RSpec.describe CustomerProfile do
   end
 
 end
-
-
-        # @library = CustomerProfile.new(age: 35, income: 50_000, zipcode: 6201)
-
-      # end
-    # end
-
-    # it "inform users that the Internal Service Error occurred" do
-    #   expect { @library = CustomerProfile.new(age: 35, income: 50_000, zipcode: 6201) }.to  raise_error(RuntimeError)
-    # end
-
-  # end
-
-# end
-
-# Hm.
-
-# User should query http://not-real.com/customer_sourcing?income=50000&zipcode=6201&age=35
-# and receive a JSON object
-# {
-  # "propensity": 0.26532,
-  # "ranking": C
-# }
-
-#
