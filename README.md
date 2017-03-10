@@ -14,7 +14,7 @@ This API will allow you to query ```not_real.com``` and gather information about
 ###Usage Instructions
 
 ```ruby
-require_relative 'customer_profile'
+require_relative 'path/to/customer_profile'
 
 profile = CustomerProfile.new(age: 35, income: 50_000, zipcode: 6201)
 
