@@ -1,4 +1,4 @@
-require './customer_profile'
+require_relative '../lib/customer_profile'
 
 RSpec.describe CustomerProfile do
 

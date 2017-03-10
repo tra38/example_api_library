@@ -1,4 +1,4 @@
-require_relative '../http_request'
+require_relative '../lib/http_request'
 
 RSpec.describe HttpRequest do
 
