@@ -1,4 +1,4 @@
-require 'pry'
+require 'net/http'
 
 module HttpRequest
   class InvalidResponse < StandardError; end
