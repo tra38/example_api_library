@@ -58,7 +58,6 @@ RSpec.describe HttpRequest do
         mock_http_request = instance_double(Net::HTTPServerError, :body => @original_html, code: "500")
         uri = URI("https://not_real.com/customer_scoring?income=50000&zipcode=6201&age=35")
         allow(HttpRequest).to receive(:send_http_request).with(uri).and_return(mock_http_request)
-        uri = URI("https://not_real.com/customer_scoring?income=50000&zipcode=6201&age=35")
 
         @http_request = HttpRequest.get_request(uri)
       end
