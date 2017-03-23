@@ -1,17 +1,17 @@
-#Leapfrog API Challenge
+# Leapfrog API Challenge
 
 This API will allow you to query ```not_real.com``` and gather information about a specific customer.
 
-##Requirements:
+## Requirements:
 - Ruby 2.2.2
 - RSpec
 
-###Setup Instructions
+### Setup Instructions
 
 1. ```git clone``` the repo.
 2. ```bundle install``` to get all the dependencies
 
-###Usage Instructions
+### Usage Instructions
 
 This library requires internet access.
 
@@ -42,7 +42,7 @@ When you create a new CustomerProfile object, we perform an API call to not_real
 
 ```http_request.rb```, a file that ```customer_profile.rb``` is using to help query the API, may warn you if the API has moved to a different location (or raise a seperate error in case too many redirections occur).
 
-###Automated Tests
+### Automated Tests
 To run the test suite, simply type ```rspec``` in the terminal.
 
 ```bash
